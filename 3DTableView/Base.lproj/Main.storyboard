@@ -498,7 +498,7 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="heG-SL-G4T">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="7EW-G4-uFL" kind="unwind" unwindAction="unwindToHomeScreenWithSegue:" id="vsA-0x-DsE"/>
+                                <segue destination="7EW-G4-uFL" kind="unwind" unwindAction="unwindToHomeScreenWithSegue:" id="Ejh-Gc-RTW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -512,7 +512,7 @@
         <scene sceneID="7vB-vN-lSQ">
             <objects>
                 <navigationController id="YI8-bg-B94" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="lee-NI-bdq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lee-NI-bdq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.75294117650000003" green="0.22352941179999999" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
