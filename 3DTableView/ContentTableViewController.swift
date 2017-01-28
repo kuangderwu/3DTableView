@@ -161,8 +161,5 @@ class ContentTableViewController: UITableViewController {
         
     }
     
-    @IBAction func unwindToHomeScreen(segue: UIStoryboardSegue) {
-        
-    }
 
 }
