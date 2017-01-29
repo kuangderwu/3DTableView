@@ -11,6 +11,7 @@
 		3D1D15901E34FFFB00C0AC32 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D158F1E34FFFB00C0AC32 /* InfoTableViewController.swift */; };
 		3D1D15941E350F4F00C0AC32 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D15931E350F4F00C0AC32 /* Restaurant.swift */; };
 		3D1D15961E3517FB00C0AC32 /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D15951E3517FB00C0AC32 /* ContentTableViewCell.swift */; };
+		3D2773CC1E3CD826008A6D63 /* AddRestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2773CB1E3CD826008A6D63 /* AddRestaurantTableViewController.swift */; };
 		3D28CC471E38587000B6DABA /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28CC461E38587000B6DABA /* ReviewViewController.swift */; };
 		3D3BAD691E3456CF00B7FE92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3BAD681E3456CF00B7FE92 /* AppDelegate.swift */; };
 		3D3BAD6E1E3456CF00B7FE92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3BAD6C1E3456CF00B7FE92 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 		3D1D158F1E34FFFB00C0AC32 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		3D1D15931E350F4F00C0AC32 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		3D1D15951E3517FB00C0AC32 /* ContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTableViewCell.swift; sourceTree = "<group>"; };
+		3D2773CB1E3CD826008A6D63 /* AddRestaurantTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRestaurantTableViewController.swift; sourceTree = "<group>"; };
 		3D28CC461E38587000B6DABA /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		3D3BAD651E3456CF00B7FE92 /* 3DTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 3DTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3BAD681E3456CF00B7FE92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				3DDE97581E36E3800078124C /* DetailTableViewCell.swift */,
 				3D28CC461E38587000B6DABA /* ReviewViewController.swift */,
 				3D5DD0931E389FD600FA138A /* MapViewController.swift */,
+				3D2773CB1E3CD826008A6D63 /* AddRestaurantTableViewController.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				3D1D15961E3517FB00C0AC32 /* ContentTableViewCell.swift in Sources */,
 				3D1D158E1E34E6CF00C0AC32 /* ContentTableViewController.swift in Sources */,
 				3DD759581E34751600E91365 /* CoverTableViewCell.swift in Sources */,
+				3D2773CC1E3CD826008A6D63 /* AddRestaurantTableViewController.swift in Sources */,
 				3DA4DD2D1E35ECDC00C4617A /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
