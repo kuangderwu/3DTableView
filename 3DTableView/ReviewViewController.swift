@@ -25,7 +25,7 @@ class ReviewViewController: UIViewController {
         backgroundImageView.addSubview(blurEffectView)
         
         reviewImage.image = UIImage(named: (restaurant?.image)!)
-        reviewImage.transform = CGAffineTransform.init(scaleX: 0, y: -1000)
+        reviewImage.transform = CGAffineTransform.init(scaleX: 0, y: 0)
         
     }
 

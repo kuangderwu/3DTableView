@@ -654,28 +654,31 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="8fQ-g8-2pC">
                                 <rect key="frame" x="52" y="441.5" width="271" height="90"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REw-Jt-7Hh">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REw-Jt-7Hh">
                                         <rect key="frame" x="0.0" y="0.0" width="87.5" height="90"/>
                                         <color key="backgroundColor" red="1" green="0.52549022440000004" blue="0.094117648900000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <color key="tintColor" red="1" green="0.52549022440000004" blue="0.094117648900000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="😍"/>
                                         <connections>
                                             <segue destination="If7-gF-qAC" kind="unwind" unwindAction="ratingButtonTappedWithSegue:" id="AiJ-l2-nId"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUc-zT-lwr">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUc-zT-lwr">
                                         <rect key="frame" x="91.5" y="0.0" width="88" height="90"/>
                                         <color key="backgroundColor" red="0.84705883260000003" green="0.76862746479999999" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <color key="tintColor" red="0.84705883260000003" green="0.76862746479999999" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="😐"/>
                                         <connections>
                                             <segue destination="If7-gF-qAC" kind="unwind" unwindAction="ratingButtonTappedWithSegue:" id="nOq-8m-16W"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPt-sb-4Rk">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPt-sb-4Rk">
                                         <rect key="frame" x="183.5" y="0.0" width="87.5" height="90"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="😤"/>
                                         <connections>
                                             <segue destination="If7-gF-qAC" kind="unwind" unwindAction="ratingButtonTappedWithSegue:" id="tbd-as-xMm"/>
