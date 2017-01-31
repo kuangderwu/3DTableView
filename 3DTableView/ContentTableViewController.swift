@@ -12,7 +12,7 @@ class ContentTableViewController: UITableViewController {
     
     var indexString: String = ""
     
-
+    var restaurants: [RestaurantMO] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,14 +47,16 @@ class ContentTableViewController: UITableViewController {
         let _restruant = restaurants[indexPath.row]
         
         cell.nameLabel.text = _restruant.name
-        cell.thumbnailImageView.image = UIImage(named: _restruant.image)
+        cell.thumbnailImageView.image = UIImage(data: _restruant.image as! Data)
         cell.locationLabel.text = _restruant.location
+        
         switch _restruant.type {
-        case .brunch: cell.typeLabel.text = "Brunch"
-        case .coffee: cell.typeLabel.text = "Coffee"
-        case .desert: cell.typeLabel.text = "Desert"
+        case Int16(0): cell.typeLabel.text = "Brunch"
+        case Int16(1): cell.typeLabel.text = "Coffee"
+        case Int16(2): cell.typeLabel.text = "Desert"
         default: cell.typeLabel.text = "Others"
         }
+        
         cell.accessoryType = _restruant.isVisited ? .checkmark : .none
         
         return cell
@@ -87,8 +89,8 @@ class ContentTableViewController: UITableViewController {
         
         (action, indexPath) -> Void in
             
-            let defaultText = "Just visit this place " + restaurants[indexPath.row].name
-            if let shareImage =  UIImage(named: restaurants[indexPath.row].image) {
+            let defaultText = "Just visit this place " + self.restaurants[indexPath.row].name!
+            if let shareImage =  UIImage(data: self.restaurants[indexPath.row].image as! Data) {
             
                 let activityController = UIActivityViewController(activityItems: [defaultText, shareImage], applicationActivities: nil)
                  self.present(activityController, animated: true, completion: nil)
@@ -99,7 +101,7 @@ class ContentTableViewController: UITableViewController {
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: {
          (action, indexPath) -> Void in
             
-            restaurants.remove(at: indexPath.row)
+            self.restaurants.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
             
@@ -120,7 +122,7 @@ class ContentTableViewController: UITableViewController {
             
             
             let  cell = tableView.cellForRow(at: indexPath)
-            if restaurants[indexPath.row].isVisited {
+            if self.restaurants[indexPath.row].isVisited {
                 cell?.accessoryType = .none
                 _checkflag = false
             } else {
@@ -128,7 +130,7 @@ class ContentTableViewController: UITableViewController {
                 _checkflag = true
             }
             
-            restaurants[indexPath.row].isVisited = _checkflag
+            self.restaurants[indexPath.row].isVisited = _checkflag
             tableView.reloadData()
             
         })

@@ -13,7 +13,7 @@ class ReviewViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var reviewImage: UIImageView!
     
-    var restaurant : Restaurant? = nil
+    var restaurant : RestaurantMO? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class ReviewViewController: UIViewController {
         blurEffectView.frame = view.bounds
         backgroundImageView.addSubview(blurEffectView)
         
-        reviewImage.image = UIImage(named: (restaurant?.image)!)
+        reviewImage.image = UIImage(data: restaurant?.image as! Data)
         reviewImage.transform = CGAffineTransform.init(scaleX: 0, y: 0)
         
     }

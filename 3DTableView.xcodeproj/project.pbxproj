@@ -21,6 +21,7 @@
 		3D5DD0921E3895F300FA138A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5DD0911E3895F300FA138A /* MapKit.framework */; };
 		3D5DD0941E389FD600FA138A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5DD0931E389FD600FA138A /* MapViewController.swift */; };
 		3DA4DD2D1E35ECDC00C4617A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4DD2C1E35ECDB00C4617A /* DetailViewController.swift */; };
+		3DAE39ED1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE39EB1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld */; };
 		3DD759581E34751600E91365 /* CoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD759571E34751600E91365 /* CoverTableViewCell.swift */; };
 		3DDE97591E36E3800078124C /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE97581E36E3800078124C /* DetailTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		3D5DD0911E3895F300FA138A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3D5DD0931E389FD600FA138A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		3DA4DD2C1E35ECDB00C4617A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3DAE39EC1E4042EF00FBBB43 /* RestaurantData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestaurantData.xcdatamodel; sourceTree = "<group>"; };
 		3DD759571E34751600E91365 /* CoverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverTableViewCell.swift; sourceTree = "<group>"; };
 		3DDE97581E36E3800078124C /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				3D1D15931E350F4F00C0AC32 /* Restaurant.swift */,
+				3DAE39EB1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				3D1D15961E3517FB00C0AC32 /* ContentTableViewCell.swift in Sources */,
 				3D1D158E1E34E6CF00C0AC32 /* ContentTableViewController.swift in Sources */,
 				3DD759581E34751600E91365 /* CoverTableViewCell.swift in Sources */,
+				3DAE39ED1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld in Sources */,
 				3D2773CC1E3CD826008A6D63 /* AddRestaurantTableViewController.swift in Sources */,
 				3DA4DD2D1E35ECDC00C4617A /* DetailViewController.swift in Sources */,
 			);
@@ -384,6 +388,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3DAE39EB1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3DAE39EC1E4042EF00FBBB43 /* RestaurantData.xcdatamodel */,
+			);
+			currentVersion = 3DAE39EC1E4042EF00FBBB43 /* RestaurantData.xcdatamodel */;
+			path = RestaurantData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3D3BAD5D1E3456CE00B7FE92 /* Project object */;
 }

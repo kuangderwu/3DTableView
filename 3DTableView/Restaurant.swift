@@ -7,9 +7,17 @@
 //
 
 import Foundation
+import CoreData
 
-enum StoreType {
-    case brunch, coffee, desert, others
+enum StoreType : Int16 {
+    case brunch = 0
+    case coffee = 1
+    case desert = 2
+    case others = 3
+}
+
+class StoreTypeManagedObject: NSManagedObject {
+    @NSManaged var type: Int16
 }
 
 class Restaurant {
@@ -35,7 +43,7 @@ class Restaurant {
 }
 
 
-
+/*
  var restaurants:[Restaurant] = [
  Restaurant(name: "Cafe Deadend", type: .coffee, location: "G/F, 72 Po Hing Fong, Sheung Wan, Hong Kong", phone: "232-923423", image: "Cafe Deadend.jpg", isVisited: false),
  Restaurant(name:"Homei", type: .coffee, location: "Shop B, G/F, 22-24A Tai Ping San Street SOHO, Sheung Wan, Hong Kong", phone: "348-233423", image: "Homei.jpg", isVisited: false),
@@ -59,4 +67,4 @@ class Restaurant {
  Restaurant(name: "Royal Oak", type: .others, location: "2 Regency Street London SW1P 4BZ United Kingdom", phone: "343-988834", image: "Royal Oak.jpg", isVisited: false),
  Restaurant(name: "CASK Pub and Kitchen", type: .others, location: "22 Charlwood Street London SW1V 2DY Pimlico", phone: "432-344050", image: "CASK Pub and Kitchen.jpg", isVisited: false),
  ]
-
+*/

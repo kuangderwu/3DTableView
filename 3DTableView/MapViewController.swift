@@ -13,7 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
  
-    var restaurant : Restaurant!
+    var restaurant : RestaurantMO!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         
         let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(restaurant.location, completionHandler: {
+        geoCoder.geocodeAddressString(restaurant.location!, completionHandler: {
             
             placemarks, error in
             
@@ -39,9 +39,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 var _subtitle = ""
                 annotation.title = self.restaurant.name
                 switch self.restaurant.type {
-                case .brunch: _subtitle = "Brunch"
-                case .coffee: _subtitle = "Coffee"
-                case .desert: _subtitle = "Desert"
+                case Int16(0): _subtitle = "Brunch"
+                case Int16(1): _subtitle = "Coffee"
+                case Int16(2): _subtitle = "Desert"
                 default: _subtitle = "Others"
                 }
                 
@@ -95,7 +95,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         let leftIconView = UIImageView(frame: CGRect.init(x:0, y:0, width:53, height:53))
    //     leftIconView.image = UIImage(data: _restaurant!.image as! Data)
-        leftIconView.image = UIImage(named: restaurant.image)
+        leftIconView.image = UIImage(data: restaurant.image as! Data)
         annotationView?.leftCalloutAccessoryView = leftIconView
         
         annotationView?.pinTintColor = UIColor.green

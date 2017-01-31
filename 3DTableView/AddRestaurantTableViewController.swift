@@ -17,7 +17,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     @IBOutlet weak var typeSegmentControl: UISegmentedControl!
     @IBOutlet weak var phoneTextField: UITextField!
     
-    var restaurant = Restaurant(name: "", type: .coffee, location: "", phone: "", image: "", isVisited: false)
+    var restaurant : RestaurantMO?
     
     var typeIndex = 0
     
@@ -80,15 +80,15 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
             present(alertController, animated: true, completion: nil)
         }
         
-        restaurant.name = nameTextField.text!
-        restaurant.location = locationTextField.text!
-        restaurant.website = webTextField.text!
-        restaurant.phone = phoneTextField.text!
+        restaurant?.name = nameTextField.text!
+        restaurant?.location = locationTextField.text!
+        restaurant?.website = webTextField.text!
+        restaurant?.phone = phoneTextField.text!
         switch typeSegmentControl.selectedSegmentIndex {
-        case 0: restaurant.type = .brunch
-        case 1: restaurant.type = .coffee
-        case 2: restaurant.type = .desert
-        case 3: restaurant.type = .others
+        case 0: restaurant?.type = Int16(0)
+        case 1: restaurant?.type = Int16(1)
+        case 2: restaurant?.type = Int16(2)
+        case 3: restaurant?.type = Int16(3)
         default: break
         }
         

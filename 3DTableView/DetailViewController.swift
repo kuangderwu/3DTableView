@@ -11,7 +11,7 @@ import MapKit
 
 class DetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
 
-    var restaurant: Restaurant!
+    var restaurant: RestaurantMO!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -23,7 +23,7 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.image = UIImage(named: restaurant.image)
+        imageView.image = UIImage(data: restaurant.image as! Data)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -42,7 +42,7 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         
         let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(restaurant.location, completionHandler: {
+        geoCoder.geocodeAddressString(restaurant.location!, completionHandler: {
             
             placemarks, error in
             
@@ -103,9 +103,9 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         case 1:
             cell.fieldLabel.text = "Type"
             switch restaurant.type {
-            case .brunch: cell.valueLabel.text = "Brunch"
-            case .coffee: cell.valueLabel.text = "Coffee"
-            case .desert: cell.valueLabel.text = "Desert"
+            case Int16(0): cell.valueLabel.text = "Brunch"
+            case Int16(1): cell.valueLabel.text = "Coffee"
+            case Int16(2): cell.valueLabel.text = "Desert"
             default: cell.valueLabel.text = "Others"
             }
         case 2:
