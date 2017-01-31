@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ContentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class ContentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
     
     var indexString: String = ""
     
@@ -17,6 +17,12 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
     
     var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
 
+    var searchController : UISearchController!
+    var searchResults: [RestaurantMO] = []
+    var isSearching: Bool = false
+    
+    let searchBar : UISearchBar? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,9 +46,38 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
                 print(error.localizedDescription)
             }
         }
-
+        
+        
+        // MARK: 20.4 Update Search Controller
+        setupSearchBar()
+        
+    }
+    
+    func setupSearchBar() {
+        
+        let searchBar = UISearchBar(frame: CGRect(x:0,y:0,width:(UIScreen.main.bounds.width),height:60))
+        searchBar.delegate = self
+        self.tableView.tableHeaderView = searchBar
+        searchBar.showsCancelButton = true
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = "Search restaurants by name"
+        searchBar.tintColor = UIColor.white
+        searchBar.barTintColor = UIColor(red: 218.0/255.0, green: 100.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+        
+    }
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar?.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
     }
 
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        searchBar.resignFirstResponder()
+    }
     // MARK 19.8 Core Data Fetch NSFetchedResultsControllerDelegate methods! 
     
     
@@ -94,7 +129,12 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return restaurants.count
+
+        if isSearching {
+            return searchResults.count
+        } else {
+            return restaurants.count
+        }
     }
 
     
@@ -103,7 +143,7 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
 
         // Configure the cell...
         
-        let _restruant = restaurants[indexPath.row]
+        let _restruant = (isSearching) ? searchResults[indexPath.row] : restaurants[indexPath.row]
         
         cell.nameLabel.text = _restruant.name
         cell.thumbnailImageView.image = UIImage(data: _restruant.image as! Data)
@@ -128,6 +168,14 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
     }
 
 
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if isSearching {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -228,8 +276,7 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
             
              let indexPath = tableView.indexPathForSelectedRow
              let destinationViewController = segue.destination as! DetailViewController
-             destinationViewController.restaurant = restaurants[indexPath!.row]
-            
+             destinationViewController.restaurant = (isSearching) ? searchResults[indexPath!.row] : restaurants[indexPath!.row]
         }
         
     }
@@ -237,6 +284,38 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
     @IBAction func unwindToHomeScreen(segue: UIStoryboardSegue) {
         
 
+    }
+
+    // MARK: 20.3 Search filter
+    
+    func filterContent(for searchText: String) {
+        
+        searchResults = restaurants.filter({ (restaurant) -> Bool in
+                return (restaurant.name?.localizedCaseInsensitiveContains(searchText))!
+        })
+        self.tableView.reloadData()
+    
+    }
+    
+    // MARK: 20.4 Update Search Result
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            isSearching = false
+            self.tableView.reloadData()
+        } else {
+            filterTableView(text: searchText)
+        }
+        
+    }
+    
+    
+    func filterTableView(text: String) {
+        isSearching = true
+        searchResults = restaurants.filter({ (restruant) -> Bool in
+                return (restruant.name?.localizedCaseInsensitiveContains(text))!
+        })
+        self.tableView.reloadData()
     }
 
 }
