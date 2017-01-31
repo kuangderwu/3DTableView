@@ -7,16 +7,75 @@
 //
 
 import UIKit
+import CoreData
 
-class ContentTableViewController: UITableViewController {
+class ContentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     var indexString: String = ""
     
     var restaurants: [RestaurantMO] = []
+    
+    var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // MARK: 19.8 Core Data fetch
+        
+        let fetchRequest: NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key:"name", ascending:true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+            let context = appDelegate.persistentContainer.viewContext
+            fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedResultController.delegate = self
+            
+            do {
+                try fetchedResultController.performFetch()
+                if let fetchedObjects = fetchedResultController.fetchedObjects {
+                    restaurants = fetchedObjects
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
 
+    }
+
+    // MARK 19.8 Core Data Fetch NSFetchedResultsControllerDelegate methods! 
+    
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                tableView.reloadRows(at: [indexPath], with: .fade)
+            }
+        default:
+            tableView.reloadData()
+        }
+        
+        if let fetchedObjects = controller.fetchedObjects {
+            restaurants = fetchedObjects as! [RestaurantMO]
+        }
+        
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
 
     
@@ -101,18 +160,25 @@ class ContentTableViewController: UITableViewController {
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: {
          (action, indexPath) -> Void in
             
-            self.restaurants.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
+        //    self.restaurants.remove(at: indexPath.row)
+        //    tableView.deleteRows(at: [indexPath], with: .fade)
+        //    tableView.reloadData()
             
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                
+                let context = appDelegate.persistentContainer.viewContext
+                let restaurantToDelete = self.fetchedResultController.object(at: indexPath)
+                context.delete(restaurantToDelete)
+                appDelegate.saveContext()
+            }
         })
         
         
-        var _title = "Check In"
+        var _title = "Visited!"
         var _checkflag: Bool = false
         
         if restaurants[indexPath.row].isVisited {
-            _title = "Uncheck!"
+            _title = "Not Visited!"
             _checkflag = true
         }
         
@@ -131,6 +197,11 @@ class ContentTableViewController: UITableViewController {
             }
             
             self.restaurants[indexPath.row].isVisited = _checkflag
+            
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.saveContext()
+            }
+            
             tableView.reloadData()
             
         })

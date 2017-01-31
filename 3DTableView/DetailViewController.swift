@@ -169,6 +169,12 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
             }
         }
         
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.saveContext()
+        }
+        
+        tableView.reloadData()
+        
     }
     
     func showMap() {

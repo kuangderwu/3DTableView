@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddRestaurantTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -17,7 +18,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     @IBOutlet weak var typeSegmentControl: UISegmentedControl!
     @IBOutlet weak var phoneTextField: UITextField!
     
-    var restaurant : RestaurantMO?
+    var restaurant : RestaurantMO!
     
     var typeIndex = 0
     
@@ -80,19 +81,34 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
             present(alertController, animated: true, completion: nil)
         }
         
-        restaurant?.name = nameTextField.text!
-        restaurant?.location = locationTextField.text!
-        restaurant?.website = webTextField.text!
-        restaurant?.phone = phoneTextField.text!
-        switch typeSegmentControl.selectedSegmentIndex {
-        case 0: restaurant?.type = Int16(0)
-        case 1: restaurant?.type = Int16(1)
-        case 2: restaurant?.type = Int16(2)
-        case 3: restaurant?.type = Int16(3)
-        default: break
-        }
         
     //    print(restaurant)
+        
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            
+            restaurant = RestaurantMO(context: appDelegate.persistentContainer.viewContext)
+            restaurant.name = nameTextField.text
+            switch typeSegmentControl.selectedSegmentIndex {
+            case 0: restaurant?.type = Int16(0)
+            case 1: restaurant?.type = Int16(1)
+            case 2: restaurant?.type = Int16(2)
+            case 3: restaurant?.type = Int16(3)
+            default: break
+            }
+            restaurant.location = locationTextField.text!
+            restaurant.website = webTextField.text!
+            restaurant.phone = phoneTextField.text!
+            
+        
+            if let restaurantImage = photoImageView.image {
+                if let imageData = UIImagePNGRepresentation(restaurantImage) {
+                    
+                    restaurant.image = NSData(data: imageData)
+                }
+            }
+        
+        }
         
         dismiss(animated: true, completion: nil)
         
@@ -101,10 +117,8 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     
     @IBAction func typeSegmentControl(_ sender: UISegmentedControl) {
         
-        print("\(typeSegmentControl.selectedSegmentIndex)")
+//        print("\(typeSegmentControl.selectedSegmentIndex)")
 
     }
-    
-    
-    
+
 }
