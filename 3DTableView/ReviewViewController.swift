@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ReviewViewController: UIViewController {
+class ReviewViewController: UIViewController{
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var reviewImage: UIImageView!
     
     var restaurant : RestaurantMO? = nil
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

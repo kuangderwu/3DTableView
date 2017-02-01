@@ -80,7 +80,12 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
         
         let _restaurant = restaurants[indexPath.row]
         
-        cell.nameField.text = _restaurant.name
+        if _restaurant.rating == nil {
+            _restaurant.rating = "  not "
+        }
+        
+        
+        cell.nameField.text = _restaurant.name! + ", " +  _restaurant.rating!
         cell.locationField.text = _restaurant.location
         cell.phoneField.text = _restaurant.phone
         cell.webField.text = _restaurant.website

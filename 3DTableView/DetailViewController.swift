@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class DetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
+class DetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate  {
 
     var restaurant: RestaurantMO!
     
@@ -19,6 +20,10 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var mapView: MKMapView!
     
+    // MARK: for retrieve
+    
+    var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
+    var restaurants: [RestaurantMO] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +77,7 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
                 }
             }
         })
+        
         
     }
 
@@ -158,14 +164,40 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         if let rating = segue.identifier {
             
+            let fetchRequest: NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
+            let predicate = NSPredicate(format: "name == %@", restaurant.name!)
+            fetchRequest.predicate = predicate
+            let sortDescriptor = NSSortDescriptor(key:"name", ascending:true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
             
-            restaurant.isVisited = true
+            if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+                let context = appDelegate.persistentContainer.viewContext
+                fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+                fetchedResultController.delegate = self
+                
+                do {
+                    try fetchedResultController.performFetch()
+                    if let fetchedObjects = fetchedResultController.fetchedObjects {
+                        restaurants = fetchedObjects
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                print("count of Detailed:  \(restaurants.count)")
+            }
             
-            switch rating {
-            case "😍": restaurant.rating = "I love it!"
-            case "😐": restaurant.rating = "So so ~"
-            case "😤": restaurant.rating = "I don't like it!"
-            default: break
+            
+            if restaurants.count == 1 {
+                var ratingString: String = ""
+
+                restaurants[0].setValue(true, forKey: "isVisited")
+                switch rating {
+                case "😍": ratingString = " I love it 😍"
+                case "😐": ratingString = " So so ~ 😐"
+                case "😤": ratingString = " Never visit again 😤"
+                default: break
+                }
+                restaurants[0].setValue(ratingString, forKey: "rating")
             }
         }
         
