@@ -108,6 +108,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
                 }
             }
         
+            appDelegate.saveContext()
         }
         
         dismiss(animated: true, completion: nil)
