@@ -108,8 +108,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
             let safariController = SFSafariViewController(url: url!)
             present(safariController, animated: true, completion: nil)
         } else {
-            urlString = "https://www.google.com.tw/?gws_rd=ssl#q="+_restautant.name!
-            print(urlString)
+            urlString = "https://www.google.com.tw"
             let url = URL(string: urlString)
             let safariController = SFSafariViewController(url: url!)
             present(safariController, animated: true, completion: nil)

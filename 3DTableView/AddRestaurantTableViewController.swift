@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddRestaurantTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddRestaurantTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -24,9 +24,23 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.nameTextField.delegate = self
+        self.locationTextField.delegate = self
+        self.webTextField.delegate = self
+        self.phoneTextField.delegate = self
 
     }
+    
+    // MARK: Make keyboard disappear 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
