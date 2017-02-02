@@ -15,9 +15,24 @@ class DiscoverTableViewController: UITableViewController {
     
     var indexString: String = ""
     var restaurants:[CKRecord] = []
+    @IBOutlet var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+   //     let spinner: UIActivityIndicatorView = UIActivityIndicatorView()
+        spinner.activityIndicatorViewStyle = .gray
+        spinner.center = view.center
+        spinner.hidesWhenStopped = true
+        view.addSubview(spinner)
+        spinner.startAnimating()
+        
+        // MARK: Refresh Control init
+        refreshControl = UIRefreshControl()
+        refreshControl?.backgroundColor = UIColor.white
+        refreshControl?.tintColor = UIColor.gray
+        refreshControl?.addTarget(self, action: #selector(fetchRecordsFromCloud), for: UIControlEvents.valueChanged)
+        
 
         fetchRecordsFromCloud()
 
@@ -29,18 +44,61 @@ class DiscoverTableViewController: UITableViewController {
         let publicDatabase = cloudContainer.publicCloudDatabase
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Restaurant", predicate: predicate)
-        publicDatabase.perform(query, inZoneWith: nil, completionHandler: {
-            (results, error) -> Void in
-            if error != nil {
-                print(error!)
+        
+        query.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
+        
+        let queryOperation = CKQueryOperation(query: query)
+        queryOperation.desiredKeys = ["name","image"]
+        queryOperation.queuePriority = .veryHigh
+        queryOperation.resultsLimit = 50
+        queryOperation.recordFetchedBlock = { (record) -> Void in
+            self.restaurants.append(record)
+        }
+        
+        queryOperation.queryCompletionBlock = { (cursor, error) -> Void in
+            if let error = error {
+                print("Failed to get data from iCloud - \(error.localizedDescription)")
+                //        self.spinner.stopAnimating()
                 return
             }
-            if let _results = results {
-                self.restaurants = _results
-                print(self.restaurants.count)
+            
+            print("Job done --> Operation mode")
+            OperationQueue.main.addOperation {
                 self.tableView.reloadData()
             }
+        }
+        
+        
+        publicDatabase.perform(query, inZoneWith: nil, completionHandler:{ results, error in
+            
+            if error != nil {
+                print("\(error?.localizedDescription)")
+                return
+            }
+            
+            if let results = results {
+                print("Download completed")
+                self.restaurants = results
+                OperationQueue.main.addOperation {
+                    // MARK: CloudKit 操作型
+                    self.spinner.stopAnimating()
+                    self.tableView.reloadData()
+                    
+                    // MARK: Refresh Control endRefreshing()
+                    
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
+                    }
+                }
+                
+            }
+            
         })
+        
+
+  
     }
     
 
@@ -82,6 +140,8 @@ class DiscoverTableViewController: UITableViewController {
         
             if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
                 cell.thumbImageView.image = UIImage(data: imageData)
+                cell.thumbImageView.layer.cornerRadius = 40.0
+                cell.thumbImageView.clipsToBounds = true
             }
         }
         
