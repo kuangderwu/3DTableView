@@ -162,8 +162,12 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
     
     @IBAction func ratingButtonTapped(segue: UIStoryboardSegue){
         
+      
+        
         if let rating = segue.identifier {
             
+            
+      
             let fetchRequest: NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
             let predicate = NSPredicate(format: "name == %@", restaurant.name!)
             fetchRequest.predicate = predicate
@@ -179,34 +183,26 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
                     try fetchedResultController.performFetch()
                     if let fetchedObjects = fetchedResultController.fetchedObjects {
                         restaurants = fetchedObjects
+                        print("fetchrequest number = \(restaurants.count)")
+                        if restaurants.count == 1 {
+                            restaurants[0].isVisited = true
+                            switch rating {
+                            case "😍":  restaurants[0].rating = " I love it 😍"
+                            case "😐":  restaurants[0].rating = " So so ~ 😐"
+                            case "😤":  restaurants[0].rating = " Never visit again 😤"
+                            default: break
+                            }
+                        print(restaurants[0].rating!)
+                        appDelegate.saveContext()
+                        }
                     }
                 } catch {
                     print(error.localizedDescription)
                 }
-                print("count of Detailed:  \(restaurants.count)")
             }
-            
-            
-            if restaurants.count == 1 {
-                var ratingString: String = ""
-
-                restaurants[0].setValue(true, forKey: "isVisited")
-                switch rating {
-                case "😍": ratingString = " I love it 😍"
-                case "😐": ratingString = " So so ~ 😐"
-                case "😤": ratingString = " Never visit again 😤"
-                default: break
-                }
-                restaurants[0].setValue(ratingString, forKey: "rating")
-            }
-        }
-        
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.saveContext()
         }
         
         tableView.reloadData()
-        
     }
     
     func showMap() {
