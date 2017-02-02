@@ -62,10 +62,19 @@ class DiscoverTableViewController: UITableViewController {
 
         let _restaurant = restaurants[indexPath.row]
         
+        var locString = "🏠: "
+        var phoneString = "☎️: "
+        var  webString = "💻: "
+        
+        
         cell.nameField.text = _restaurant.object(forKey: "name") as? String
-        cell.locationField.text = _restaurant.object(forKey: "location") as? String
-        cell.phoneField.text = _restaurant.object(forKey: "phone") as? String
-        cell.webField.text = _restaurant.object(forKey: "web") as? String
+        
+        locString += (_restaurant.object(forKey: "location") as? String)!
+        phoneString += (_restaurant.object(forKey: "phone") as? String)!
+        webString += (_restaurant.object(forKey: "web") as? String )!
+        cell.locationField.text = locString
+        cell.phoneField.text = phoneString
+        cell.webField.text = webString
        
         
         if let image = _restaurant.object(forKey: "image") {
