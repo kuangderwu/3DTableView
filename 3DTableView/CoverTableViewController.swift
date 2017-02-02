@@ -67,7 +67,9 @@ class CoverTableViewController: UITableViewController {
         let index = myDictionary[indexPath.row]["image"]
         if index! == "1" {
             segueID = "contentSegue"
-        } else  {
+        } else if index! == "2" {
+            segueID = "discoverSegue"
+        } else {
             segueID = "infoSegue"
         }
         performSegue(withIdentifier: segueID, sender: myDictionary[indexPath.row]["name"])
@@ -86,6 +88,9 @@ class CoverTableViewController: UITableViewController {
         switch sendString {
             case "Explore":
                 let contentview = segue.destination as! ContentTableViewController
+                contentview.indexString = sendString
+            case "Discover":
+                let contentview = segue.destination as! DiscoverTableViewController
                 contentview.indexString = sendString
             default:
                 let contentview = segue.destination as! InfoTableViewController

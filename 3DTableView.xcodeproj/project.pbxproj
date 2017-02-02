@@ -18,8 +18,11 @@
 		3D3BAD701E3456CF00B7FE92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3BAD6F1E3456CF00B7FE92 /* Assets.xcassets */; };
 		3D3BAD731E3456CF00B7FE92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3BAD711E3456CF00B7FE92 /* LaunchScreen.storyboard */; };
 		3D3BAD7B1E3457E700B7FE92 /* CoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3BAD7A1E3457E700B7FE92 /* CoverTableViewController.swift */; };
+		3D3DC8E81E42DCE7005CB376 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3DC8E71E42DCE7005CB376 /* CloudKit.framework */; };
 		3D5DD0921E3895F300FA138A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5DD0911E3895F300FA138A /* MapKit.framework */; };
 		3D5DD0941E389FD600FA138A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5DD0931E389FD600FA138A /* MapViewController.swift */; };
+		3D8A8C791E430A5800750247 /* DiscoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A8C781E430A5800750247 /* DiscoverTableViewController.swift */; };
+		3D8A8C7B1E43146700750247 /* DiscoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A8C7A1E43146700750247 /* DiscoverTableViewCell.swift */; };
 		3DA4DD2D1E35ECDC00C4617A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA4DD2C1E35ECDB00C4617A /* DetailViewController.swift */; };
 		3DAE39ED1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE39EB1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld */; };
 		3DC287691E417768004DE17C /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC287681E417768004DE17C /* InfoTableViewCell.swift */; };
@@ -41,8 +44,12 @@
 		3D3BAD721E3456CF00B7FE92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D3BAD741E3456CF00B7FE92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D3BAD7A1E3457E700B7FE92 /* CoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverTableViewController.swift; sourceTree = "<group>"; };
+		3D3DC8E61E42DCDF005CB376 /* 3DTableView.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = 3DTableView.entitlements; sourceTree = "<group>"; };
+		3D3DC8E71E42DCE7005CB376 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		3D5DD0911E3895F300FA138A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3D5DD0931E389FD600FA138A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3D8A8C781E430A5800750247 /* DiscoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableViewController.swift; sourceTree = "<group>"; };
+		3D8A8C7A1E43146700750247 /* DiscoverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableViewCell.swift; sourceTree = "<group>"; };
 		3DA4DD2C1E35ECDB00C4617A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		3DAE39EC1E4042EF00FBBB43 /* RestaurantData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestaurantData.xcdatamodel; sourceTree = "<group>"; };
 		3DC287681E417768004DE17C /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -56,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D5DD0921E3895F300FA138A /* MapKit.framework in Frameworks */,
+				3D3DC8E81E42DCE7005CB376 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +110,7 @@
 		3D3BAD671E3456CF00B7FE92 /* 3DTableView */ = {
 			isa = PBXGroup;
 			children = (
+				3D8A8C771E430A1B00750247 /* Discover */,
 				3DC287671E41748C004DE17C /* Info */,
 				3DA4DD2B1E35ECA900C4617A /* Detail */,
 				3D1D15921E350F1300C0AC32 /* Model */,
@@ -118,9 +127,20 @@
 		3D5DD0901E3895F300FA138A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D3DC8E71E42DCE7005CB376 /* CloudKit.framework */,
 				3D5DD0911E3895F300FA138A /* MapKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D8A8C771E430A1B00750247 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				3D3DC8E61E42DCDF005CB376 /* 3DTableView.entitlements */,
+				3D8A8C781E430A5800750247 /* DiscoverTableViewController.swift */,
+				3D8A8C7A1E43146700750247 /* DiscoverTableViewCell.swift */,
+			);
+			name = Discover;
 			sourceTree = "<group>";
 		};
 		3DA4DD2B1E35ECA900C4617A /* Detail */ = {
@@ -182,6 +202,12 @@
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -230,11 +256,13 @@
 				3D1D15941E350F4F00C0AC32 /* Restaurant.swift in Sources */,
 				3D3BAD7B1E3457E700B7FE92 /* CoverTableViewController.swift in Sources */,
 				3D1D15961E3517FB00C0AC32 /* ContentTableViewCell.swift in Sources */,
+				3D8A8C7B1E43146700750247 /* DiscoverTableViewCell.swift in Sources */,
 				3D1D158E1E34E6CF00C0AC32 /* ContentTableViewController.swift in Sources */,
 				3DD759581E34751600E91365 /* CoverTableViewCell.swift in Sources */,
 				3DAE39ED1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld in Sources */,
 				3DC287691E417768004DE17C /* InfoTableViewCell.swift in Sources */,
 				3D2773CC1E3CD826008A6D63 /* AddRestaurantTableViewController.swift in Sources */,
+				3D8A8C791E430A5800750247 /* DiscoverTableViewController.swift in Sources */,
 				3DA4DD2D1E35ECDC00C4617A /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = 3DTableView/3DTableView.entitlements;
 				DEVELOPMENT_TEAM = WH55HNJUSA;
 				INFOPLIST_FILE = 3DTableView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -369,6 +398,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = 3DTableView/3DTableView.entitlements;
 				DEVELOPMENT_TEAM = WH55HNJUSA;
 				INFOPLIST_FILE = 3DTableView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
