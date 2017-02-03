@@ -15,6 +15,8 @@ class DiscoverTableViewController: UITableViewController {
     
     var indexString: String = ""
     var restaurants:[CKRecord] = []
+    var imageCache = NSCache<CKRecordID, NSURL>()
+    
     @IBOutlet var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -40,6 +42,10 @@ class DiscoverTableViewController: UITableViewController {
 
 
     func fetchRecordsFromCloud() {
+        
+        restaurants.removeAll()
+        tableView.reloadData()
+        
         let cloudContainer = CKContainer(identifier: "iCloud.com.kdwu.SampleTable")
         let publicDatabase = cloudContainer.publicCloudDatabase
         let predicate = NSPredicate(value: true)
@@ -48,7 +54,7 @@ class DiscoverTableViewController: UITableViewController {
         query.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.desiredKeys = ["name","type"]
+        queryOperation.desiredKeys = ["name"]
         queryOperation.queuePriority = .veryHigh
         queryOperation.resultsLimit = 50
         queryOperation.recordFetchedBlock = { (record) -> Void in
@@ -135,33 +141,45 @@ class DiscoverTableViewController: UITableViewController {
         cell.thumbImageView.image = UIImage(named: "photoalbum")
     
         
-        let publicDatabase = CKContainer(identifier: "iCloud.com.kdwu.SampleTable").publicCloudDatabase
-        let fetchRecordsImageOperation = CKFetchRecordsOperation(recordIDs: [restaurant.recordID])
-        fetchRecordsImageOperation.desiredKeys = ["image"]
-        fetchRecordsImageOperation.queuePriority = .veryHigh
-        
-        fetchRecordsImageOperation.perRecordCompletionBlock = {
-            (record, recordID, error) -> Void in
-            
-            if let error = error {
-                print("Failed to get restruant image :\(error.localizedDescription)")
-                return
+        if let imageFileURL = imageCache.object(forKey: restaurant.recordID) {
+            print("Get image from Cache")
+            if let imageData = try? Data.init(contentsOf: imageFileURL as URL) {
+                cell.thumbImageView?.image = UIImage(data: imageData)
             }
             
-            if let restaurantRecord = record {
-                OperationQueue.main.addOperation() {
-                    if let image = restaurantRecord.object(forKey: "image") {
-                        let imageAsset = image as! CKAsset
+        } else {
+        
+            let publicDatabase = CKContainer(identifier: "iCloud.com.kdwu.SampleTable").publicCloudDatabase
+            let fetchRecordsImageOperation = CKFetchRecordsOperation(recordIDs: [restaurant.recordID])
+            fetchRecordsImageOperation.desiredKeys = ["image"]
+            fetchRecordsImageOperation.queuePriority = .veryHigh
+        
+            fetchRecordsImageOperation.perRecordCompletionBlock = {
+                (record, recordID, error) -> Void in
+            
+                if let error = error {
+                    print("Failed to get restruant image :\(error.localizedDescription)")
+                    return
+                }
+            
+                if let restaurantRecord = record {
+                    OperationQueue.main.addOperation() {
+                        if let image = restaurantRecord.object(forKey: "image") {
+                            let imageAsset = image as! CKAsset
                         
-                        if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
-                            cell.thumbImageView.image = UIImage(data: imageData)
+                            if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
+                                cell.thumbImageView.image = UIImage(data: imageData)
+                                cell.thumbImageView.layer.cornerRadius = 40.0
+                                cell.thumbImageView.clipsToBounds = true
+                            }
+                            self.imageCache.setObject(imageAsset.fileURL as NSURL, forKey: restaurant.recordID)
                         }
                     }
                 }
             }
-        }
         
-        publicDatabase.add(fetchRecordsImageOperation)
+            publicDatabase.add(fetchRecordsImageOperation)
+        }
         
         return cell
     }
