@@ -112,7 +112,7 @@
         <!--🥗-->
         <scene sceneID="bAO-h7-f9c">
             <objects>
-                <tableViewController id="W9H-1b-M3d" customClass="ContentTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Content" id="W9H-1b-M3d" customClass="ContentTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="5q4-eU-zvG">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -226,12 +226,12 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <mapView key="tableFooterView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="ocM-BO-sr8">
-                                    <rect key="frame" x="0.0" y="343.5" width="375" height="200"/>
+                                    <rect key="frame" x="0.0" y="315" width="375" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </mapView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="36" id="zdn-d1-61g" customClass="DetailTableViewCell" customModule="_DTableView" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="307.5" width="375" height="36"/>
+                                        <rect key="frame" x="0.0" y="279" width="375" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zdn-d1-61g" id="pir-ze-X10">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
@@ -313,7 +313,7 @@
         <!--🆕-->
         <scene sceneID="bOT-09-5VU">
             <objects>
-                <tableViewController id="hFk-AC-mC1" customClass="AddRestaurantTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddRestaurant" id="hFk-AC-mC1" customClass="AddRestaurantTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="nrK-WN-iiv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -726,7 +726,7 @@
         <!--🌐-->
         <scene sceneID="vjB-85-oE6">
             <objects>
-                <tableViewController id="ITb-yD-WeY" customClass="DiscoverTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Discover" id="ITb-yD-WeY" customClass="DiscoverTableViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="F6M-MH-dYn">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

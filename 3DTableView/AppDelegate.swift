@@ -98,7 +98,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        if shortcutItem.type == "com.kdwu.-DTableView.NewRestaurant" {
+            
+            let vc = UIStoryboard(name: "Main", bundle: nil)
+            let addRestaurant = vc.instantiateViewController(withIdentifier: "AddRestaurant") as! AddRestaurantTableViewController
+            self.window?.rootViewController?.present(addRestaurant, animated: true, completion: nil)
+            
+        } else if shortcutItem.type == "com.kdwu.-DTableView.Collection" {
+            let vc = UIStoryboard(name: "Main", bundle: nil)
+            let content = vc.instantiateViewController(withIdentifier: "Content") as! ContentTableViewController
+            self.window?.rootViewController?.present(content, animated: true, completion: nil)
+
+        } else {
+            let vc = UIStoryboard(name: "Main", bundle: nil)
+            let discover = vc.instantiateViewController(withIdentifier: "Discover") as! DiscoverTableViewController
+            self.window?.rootViewController?.present(discover, animated: true, completion: nil)
+            
+        }
+        
+    }
     
 }
 

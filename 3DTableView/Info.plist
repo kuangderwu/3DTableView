@@ -2,6 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.kdwu.-DTableView.NewRestaurant</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Add a new Restaurant </string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Explore a new restaurant</string>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.kdwu.-DTableView.Collection</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>My favorite collection</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Favorite</string>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeFavorite</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.kdwu.-DTableView.Cloud</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Share by iCloud</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>iCloud Sharing</string>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeCloud</string>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
