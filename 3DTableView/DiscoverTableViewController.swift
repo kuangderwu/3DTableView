@@ -11,7 +11,6 @@ import CloudKit
 import SafariServices
 
 class DiscoverTableViewController: UITableViewController {
-
     
     var indexString: String = ""
     var restaurants:[CKRecord] = []
@@ -22,30 +21,24 @@ class DiscoverTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-   //     let spinner: UIActivityIndicatorView = UIActivityIndicatorView()
         spinner.activityIndicatorViewStyle = .gray
         spinner.center = view.center
         spinner.hidesWhenStopped = true
         view.addSubview(spinner)
         spinner.startAnimating()
-        
         // MARK: Refresh Control init
         refreshControl = UIRefreshControl()
         refreshControl?.backgroundColor = UIColor.white
         refreshControl?.tintColor = UIColor.gray
         refreshControl?.addTarget(self, action: #selector(fetchRecordsFromCloud), for: UIControlEvents.valueChanged)
-        
 
         fetchRecordsFromCloud()
-
     }
-
 
     func fetchRecordsFromCloud() {
         
         restaurants.removeAll()
         tableView.reloadData()
-        
         let cloudContainer = CKContainer(identifier: "iCloud.com.kdwu.SampleTable")
         let publicDatabase = cloudContainer.publicCloudDatabase
         let predicate = NSPredicate(value: true)
@@ -64,23 +57,18 @@ class DiscoverTableViewController: UITableViewController {
         queryOperation.queryCompletionBlock = { (cursor, error) -> Void in
             if let error = error {
                 print("Failed to get data from iCloud - \(error.localizedDescription)")
-                //        self.spinner.stopAnimating()
                 return
             }
-            
             OperationQueue.main.addOperation {
                 self.tableView.reloadData()
             }
         }
         
-        
         publicDatabase.perform(query, inZoneWith: nil, completionHandler:{ results, error in
-            
             if error != nil {
                 print("\(error?.localizedDescription)")
                 return
             }
-            
             if let results = results {
                 print("Download completed")
                 self.restaurants = results
@@ -88,25 +76,17 @@ class DiscoverTableViewController: UITableViewController {
                     // MARK: CloudKit 操作型
                     self.spinner.stopAnimating()
                     self.tableView.reloadData()
-                    
                     // MARK: Refresh Control endRefreshing()
-                    
                     if let refreshControl = self.refreshControl {
                         if refreshControl.isRefreshing {
                             refreshControl.endRefreshing()
                         }
                     }
                 }
-                
             }
-            
         })
-        
-
-  
     }
     
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -124,11 +104,9 @@ class DiscoverTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DiscoverTableViewCell
 
         let restaurant = restaurants[indexPath.row]
-        
         var locString = "🏠: "
         var phoneString = "☎️: "
         var  webString = "👉: "
-        
         
         cell.nameField.text = restaurant.object(forKey: "name") as? String
         
@@ -152,9 +130,7 @@ class DiscoverTableViewController: UITableViewController {
             if let imageData = try? Data.init(contentsOf: imageFileURL as URL) {
                 cell.thumbImageView?.image = UIImage(data: imageData)
             }
-            
         } else {
-        
             let publicDatabase = CKContainer(identifier: "iCloud.com.kdwu.SampleTable").publicCloudDatabase
             let fetchRecordsImageOperation = CKFetchRecordsOperation(recordIDs: [restaurant.recordID])
             fetchRecordsImageOperation.desiredKeys = ["image"]
@@ -167,7 +143,6 @@ class DiscoverTableViewController: UITableViewController {
                     print("Failed to get restruant image :\(error.localizedDescription)")
                     return
                 }
-            
                 if let restaurantRecord = record {
                     OperationQueue.main.addOperation() {
                         if let image = restaurantRecord.object(forKey: "image") {
@@ -183,23 +158,21 @@ class DiscoverTableViewController: UITableViewController {
                     }
                 }
             }
-        
             publicDatabase.add(fetchRecordsImageOperation)
         }
-        
         return cell
     }
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
- 
         let _restaurant = restaurants[indexPath.row]
-
         if let urlString = _restaurant.object(forKey: "web") as? String {
-           let url = URL(string: urlString)
-           let safariController = SFSafariViewController(url: url!)
-            present(safariController, animated: true, completion: nil)
+            if urlString != "" {
+               let url = URL(string: urlString)
+               let safariController = SFSafariViewController(url: url!)
+               present(safariController, animated: true, completion: nil)
+            }
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }

@@ -89,13 +89,14 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     }
     
     func isContentCompleted (restaurant: RestaurantMO) -> Bool {
-        var _result = true
+        var _result: Bool
         
-        if restaurant.name == nil || restaurant.location == nil || restaurant.website == nil || restaurant.image == nil {
+        if restaurant.name == "" || restaurant.location == "" || restaurant.website == "" || restaurant.image == nil {
              _result = false
+        } else {
+            _result = true
         }
         return _result
-        
     }
     
     func saveRecordToCloud(restaurant: RestaurantMO) -> Void {
@@ -147,8 +148,6 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         }
         
         
-    //    print(restaurant)
-        
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
@@ -174,6 +173,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
             }
         
             appDelegate.saveContext()
+            
             if isContentCompleted(restaurant: restaurant) {
               saveRecordToCloud(restaurant: restaurant)
             }
