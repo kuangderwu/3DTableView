@@ -132,9 +132,15 @@ class DiscoverTableViewController: UITableViewController {
         
         cell.nameField.text = restaurant.object(forKey: "name") as? String
         
-        locString += (restaurant.object(forKey: "location") as? String)!
-        phoneString += (restaurant.object(forKey: "phone") as? String)!
-        webString += (restaurant.object(forKey: "web") as? String )!
+        if let temploc = restaurant.object(forKey: "location") as? String {
+            locString += temploc
+        }
+        if let tempphone = restaurant.object(forKey: "phone") as? String {
+            phoneString += tempphone
+        }
+        if let tempweb = restaurant.object(forKey: "web") as? String {
+            webString += tempweb
+        }
         cell.locationField.text = locString
         cell.phoneField.text = phoneString
         cell.webField.text = webString
@@ -190,11 +196,11 @@ class DiscoverTableViewController: UITableViewController {
  
         let _restaurant = restaurants[indexPath.row]
 
-        let urlString = _restaurant.object(forKey: "web") as? String
-        let url = URL(string: urlString!)
-        let safariController = SFSafariViewController(url: url!)
-        present(safariController, animated: true, completion: nil)
-        
+        if let urlString = _restaurant.object(forKey: "web") as? String {
+           let url = URL(string: urlString)
+           let safariController = SFSafariViewController(url: url!)
+            present(safariController, animated: true, completion: nil)
+        }
         tableView.deselectRow(at: indexPath, animated: false)
     }
     

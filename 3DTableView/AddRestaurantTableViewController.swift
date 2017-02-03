@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 class AddRestaurantTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
@@ -86,6 +87,55 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         dismiss(animated: true, completion: nil)
         
     }
+    
+    func isContentCompleted (restaurant: RestaurantMO) -> Bool {
+        var _result = true
+        
+        if restaurant.name == nil || restaurant.location == nil || restaurant.website == nil || restaurant.image == nil {
+             _result = false
+        }
+        return _result
+        
+    }
+    
+    func saveRecordToCloud(restaurant: RestaurantMO) -> Void {
+        
+        
+        let record = CKRecord(recordType: "Restaurant")
+        record.setValue(restaurant.name, forKey: "name")
+        var _type = ""
+        switch restaurant.type {
+        case Int16(0): _type = "Brunch"
+        case Int16(1): _type = "Coffee"
+        case Int16(2): _type = "Desert"
+        case Int16(3): _type = "Others"
+        default: _type = "Others"
+        }
+        record.setValue(_type, forKey: "type")
+        record.setValue(restaurant.location, forKey: "location")
+        record.setValue(restaurant.phone, forKey: "phone")
+        record.setValue(restaurant.website, forKey: "web")
+        let imageData = restaurant.image as! Data
+        
+        let originalImage = UIImage(data: imageData)!
+        let scalingFactor = (originalImage.size.width > 1024) ? 1024/originalImage.size.width: 1.0
+        let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
+        
+        let imageFilePath = NSTemporaryDirectory() + restaurant.name!
+        let imageFileURL = URL(fileURLWithPath: imageFilePath)
+        try? UIImageJPEGRepresentation(scaledImage, 0.8)?.write(to: imageFileURL)
+        
+        let imageAsset = CKAsset(fileURL: imageFileURL)
+        record.setValue(imageAsset, forKey: "image")
+ 
+        
+        let publicDatabase = CKContainer(identifier: "iCloud.com.kdwu.SampleTable").publicCloudDatabase
+        publicDatabase.save(record, completionHandler: {
+            (record, error) -> Void in
+            try? FileManager.default.removeItem(at: imageFileURL)
+        })
+        
+    }
 
     @IBAction func save(_ sender: Any) {
         if nameTextField.text == "" || locationTextField.text == "" {
@@ -93,6 +143,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
             let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(alertAction)
             present(alertController, animated: true, completion: nil)
+            return
         }
         
         
@@ -123,6 +174,9 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
             }
         
             appDelegate.saveContext()
+            if isContentCompleted(restaurant: restaurant) {
+              saveRecordToCloud(restaurant: restaurant)
+            }
         }
         
         dismiss(animated: true, completion: nil)
