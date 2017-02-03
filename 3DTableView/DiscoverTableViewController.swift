@@ -48,7 +48,7 @@ class DiscoverTableViewController: UITableViewController {
         query.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.desiredKeys = ["name","image"]
+        queryOperation.desiredKeys = ["name","type"]
         queryOperation.queuePriority = .veryHigh
         queryOperation.resultsLimit = 50
         queryOperation.recordFetchedBlock = { (record) -> Void in
@@ -62,7 +62,6 @@ class DiscoverTableViewController: UITableViewController {
                 return
             }
             
-            print("Job done --> Operation mode")
             OperationQueue.main.addOperation {
                 self.tableView.reloadData()
             }
@@ -118,32 +117,51 @@ class DiscoverTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DiscoverTableViewCell
 
-        let _restaurant = restaurants[indexPath.row]
+        let restaurant = restaurants[indexPath.row]
         
         var locString = "🏠: "
         var phoneString = "☎️: "
-        var  webString = "💻: "
+        var  webString = "👉: "
         
         
-        cell.nameField.text = _restaurant.object(forKey: "name") as? String
+        cell.nameField.text = restaurant.object(forKey: "name") as? String
         
-        locString += (_restaurant.object(forKey: "location") as? String)!
-        phoneString += (_restaurant.object(forKey: "phone") as? String)!
-        webString += (_restaurant.object(forKey: "web") as? String )!
+        locString += (restaurant.object(forKey: "location") as? String)!
+        phoneString += (restaurant.object(forKey: "phone") as? String)!
+        webString += (restaurant.object(forKey: "web") as? String )!
         cell.locationField.text = locString
         cell.phoneField.text = phoneString
         cell.webField.text = webString
-       
+        cell.thumbImageView.image = UIImage(named: "photoalbum")
+    
         
-        if let image = _restaurant.object(forKey: "image") {
-            let imageAsset = image as! CKAsset
+        let publicDatabase = CKContainer(identifier: "iCloud.com.kdwu.SampleTable").publicCloudDatabase
+        let fetchRecordsImageOperation = CKFetchRecordsOperation(recordIDs: [restaurant.recordID])
+        fetchRecordsImageOperation.desiredKeys = ["image"]
+        fetchRecordsImageOperation.queuePriority = .veryHigh
         
-            if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
-                cell.thumbImageView.image = UIImage(data: imageData)
-                cell.thumbImageView.layer.cornerRadius = 40.0
-                cell.thumbImageView.clipsToBounds = true
+        fetchRecordsImageOperation.perRecordCompletionBlock = {
+            (record, recordID, error) -> Void in
+            
+            if let error = error {
+                print("Failed to get restruant image :\(error.localizedDescription)")
+                return
+            }
+            
+            if let restaurantRecord = record {
+                OperationQueue.main.addOperation() {
+                    if let image = restaurantRecord.object(forKey: "image") {
+                        let imageAsset = image as! CKAsset
+                        
+                        if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
+                            cell.thumbImageView.image = UIImage(data: imageData)
+                        }
+                    }
+                }
             }
         }
+        
+        publicDatabase.add(fetchRecordsImageOperation)
         
         return cell
     }
