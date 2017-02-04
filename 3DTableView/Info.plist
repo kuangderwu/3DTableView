@@ -8,9 +8,9 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>com.kdwu.-DTableView.NewRestaurant</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Add a new Restaurant </string>
+			<string>Add new Restaurants </string>
 			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Explore a new restaurant</string>
+			<string>Explore new restaurants</string>
 			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypeAdd</string>
 		</dict>
@@ -18,9 +18,9 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>com.kdwu.-DTableView.Collection</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>My favorite collection</string>
+			<string>My collection</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Favorite</string>
+			<string>My favorite</string>
 			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypeFavorite</string>
 		</dict>
@@ -28,9 +28,9 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>com.kdwu.-DTableView.Cloud</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Share by iCloud</string>
+			<string>Shared by Clouds</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>iCloud Sharing</string>
+			<string>Cloud Sharing</string>
 			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypeCloud</string>
 		</dict>

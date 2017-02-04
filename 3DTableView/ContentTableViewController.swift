@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ContentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
+class ContentTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate {
     
     var indexString: String = ""
     
@@ -50,6 +50,14 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
         
         // MARK: 20.4 Update Search Controller
         setupSearchBar()
+        
+        
+        // MARK: 3D Touch Peek & Pop
+        
+        
+        if (traitCollection.forceTouchCapability == .available) {
+            registerForPreviewing(with: self as UIViewControllerPreviewingDelegate, sourceView: view)
+        }
         
     }
     
@@ -318,4 +326,36 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
         self.tableView.reloadData()
     }
 
+    
+    // MARK: 3D Touch Peek & Pop , Preview
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        guard let indexPath = tableView.indexPathForRow(at: location) else {
+            return nil
+        }
+        
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+            return nil
+        }
+        
+        guard let detailViewController = storyboard?.instantiateViewController(withIdentifier: "Detail") as?
+            DetailViewController else {
+            return nil
+        }
+        
+        let selectedRestaurant = restaurants[indexPath.row]
+        detailViewController.restaurant = selectedRestaurant
+        detailViewController.preferredContentSize = CGSize(width: 0.0, height: 450.0)
+        previewingContext.sourceRect = cell.frame
+        
+        return detailViewController
+        
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        show(viewControllerToCommit, sender: self)
+    }
+    
+    
 }

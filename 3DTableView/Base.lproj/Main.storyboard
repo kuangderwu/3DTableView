@@ -28,14 +28,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="gOk-vX-VTi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="150.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="375" id="CLC-Kz-MAW"/>
                                                 <constraint firstAttribute="height" constant="150" id="fXd-VU-chz"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5h-H1-eAP">
-                                            <rect key="frame" x="0.0" y="40.5" width="375" height="21"/>
+                                            <rect key="frame" x="0.0" y="41" width="375" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="cdG-3I-4rN"/>
                                             </constraints>
@@ -44,7 +44,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AX-h9-4Ax">
-                                            <rect key="frame" x="0.0" y="93.5" width="375" height="21"/>
+                                            <rect key="frame" x="0.0" y="94" width="375" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="0xR-AM-xef"/>
                                                 <constraint firstAttribute="width" constant="375" id="d33-ja-z9S"/>
@@ -56,7 +56,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HFO-86-5DA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="150.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="375" id="yS6-7l-GkT"/>
@@ -209,7 +209,7 @@
         <!--Detail View Controller-->
         <scene sceneID="BcH-i0-MXw">
             <objects>
-                <viewController id="n5h-5b-BJY" customClass="DetailViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Detail" id="n5h-5b-BJY" customClass="DetailViewController" customModule="_DTableView" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7y2-Oh-u4N"/>
                         <viewControllerLayoutGuide type="bottom" id="jWs-Z1-2sM"/>
@@ -591,7 +591,7 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WQh-i7-a4N">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WQh-i7-a4N">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                             </mapView>
                         </subviews>
