@@ -106,7 +106,7 @@ class DiscoverTableViewController: UITableViewController {
         let restaurant = restaurants[indexPath.row]
         var locString = "🏠: "
         var phoneString = "☎️: "
-        var  webString = "👉: "
+        var  webString = "🍽: "
         
         cell.nameField.text = restaurant.object(forKey: "name") as? String
         
@@ -116,7 +116,7 @@ class DiscoverTableViewController: UITableViewController {
         if let tempphone = restaurant.object(forKey: "phone") as? String {
             phoneString += tempphone
         }
-        if let tempweb = restaurant.object(forKey: "web") as? String {
+        if let tempweb = restaurant.object(forKey: "type") as? String {
             webString += tempweb
         }
         cell.locationField.text = locString
@@ -150,7 +150,7 @@ class DiscoverTableViewController: UITableViewController {
                         
                             if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
                                 cell.thumbImageView.image = UIImage(data: imageData)
-                                cell.thumbImageView.layer.cornerRadius = 40.0
+                                cell.thumbImageView.layer.cornerRadius = 10.0
                                 cell.thumbImageView.clipsToBounds = true
                             }
                             self.imageCache.setObject(imageAsset.fileURL as NSURL, forKey: restaurant.recordID)
