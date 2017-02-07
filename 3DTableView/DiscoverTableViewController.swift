@@ -9,6 +9,59 @@
 import UIKit
 import CloudKit
 import SafariServices
+import SystemConfiguration
+
+protocol Utilities {
+}
+
+extension NSObject:Utilities {
+    
+    enum ReachabilityStatus {
+        case notReachable
+        case reachableViaWWAN
+        case reachableViaWiFi
+    }
+    
+    var currentReachabilityStatus: ReachabilityStatus {
+        
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
+        }) else {
+            return .notReachable
+        }
+        
+        var flags: SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return .notReachable
+        }
+        
+        if flags.contains(.reachable) == false {
+            // The target host is not reachable.
+            return .notReachable
+        }
+        else if flags.contains(.isWWAN) == true {
+            // WWAN connections are OK if the calling application is using the CFNetwork APIs.
+            return .reachableViaWWAN
+        }
+        else if flags.contains(.connectionRequired) == false {
+            // If the target host is reachable and no connection is required then we'll assume that you're on Wi-Fi...
+            return .reachableViaWiFi
+        }
+        else if (flags.contains(.connectionOnDemand) == true || flags.contains(.connectionOnTraffic) == true) && flags.contains(.interventionRequired) == false {
+            // The connection is on-demand (or on-traffic) if the calling application is using the CFSocketStream or higher APIs and no [user] intervention is needed
+            return .reachableViaWiFi
+        }
+        else {
+            return .notReachable
+        }
+    }
+}
 
 class DiscoverTableViewController: UITableViewController {
     
@@ -26,13 +79,28 @@ class DiscoverTableViewController: UITableViewController {
         spinner.hidesWhenStopped = true
         view.addSubview(spinner)
         spinner.startAnimating()
+        
+        
+        
         // MARK: Refresh Control init
         refreshControl = UIRefreshControl()
         refreshControl?.backgroundColor = UIColor.white
         refreshControl?.tintColor = UIColor.gray
         refreshControl?.addTarget(self, action: #selector(fetchRecordsFromCloud), for: UIControlEvents.valueChanged)
 
-        fetchRecordsFromCloud()
+        // MARK: Check network accessability
+        
+        if currentReachabilityStatus != .notReachable {
+            fetchRecordsFromCloud()
+        } else {
+            //建立UIAlertController
+            let alertcontroller = UIAlertController(title: "Unable to reach iCloud!!", message: "Please check your network connection", preferredStyle: .alert);
+            //新增選項
+            let alertaction = UIAlertAction(title: "Please Return and Choose others", style: .default , handler:nil);
+            // action style .default .cancel .destructive
+            alertcontroller.addAction(alertaction);
+            self.present(alertcontroller, animated: true, completion: nil);
+        }
     }
 
     func fetchRecordsFromCloud() {
@@ -70,7 +138,6 @@ class DiscoverTableViewController: UITableViewController {
                 return
             }
             if let results = results {
-                print("Download completed")
                 self.restaurants = results
                 OperationQueue.main.addOperation {
                     // MARK: CloudKit 操作型
@@ -126,7 +193,7 @@ class DiscoverTableViewController: UITableViewController {
     
         
         if let imageFileURL = imageCache.object(forKey: restaurant.recordID) {
-            print("Get image from Cache")
+            // Mark: get image from cache
             if let imageData = try? Data.init(contentsOf: imageFileURL as URL) {
                 cell.thumbImageView?.image = UIImage(data: imageData)
             }
