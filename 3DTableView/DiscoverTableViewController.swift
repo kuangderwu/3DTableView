@@ -234,9 +234,15 @@ class DiscoverTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let _restaurant = restaurants[indexPath.row]
+        var urlStringtemp : String
         if let urlString = _restaurant.object(forKey: "web") as? String {
             if urlString != "" {
-               let url = URL(string: urlString)
+                if !(urlString.hasPrefix("http")) {
+                    urlStringtemp = "https://" + urlString
+                } else {
+                    urlStringtemp = urlString
+                }
+               let url = URL(string: urlStringtemp)
                let safariController = SFSafariViewController(url: url!)
                present(safariController, animated: true, completion: nil)
             }
