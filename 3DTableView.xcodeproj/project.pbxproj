@@ -203,7 +203,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 1;
@@ -387,6 +387,7 @@
 				CODE_SIGN_ENTITLEMENTS = 3DTableView/3DTableView.entitlements;
 				DEVELOPMENT_TEAM = WH55HNJUSA;
 				INFOPLIST_FILE = 3DTableView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kdwu.-DTableView";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -401,6 +402,7 @@
 				CODE_SIGN_ENTITLEMENTS = 3DTableView/3DTableView.entitlements;
 				DEVELOPMENT_TEAM = WH55HNJUSA;
 				INFOPLIST_FILE = 3DTableView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kdwu.-DTableView";
 				PRODUCT_NAME = "$(TARGET_NAME)";
