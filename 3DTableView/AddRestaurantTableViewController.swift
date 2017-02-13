@@ -154,7 +154,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             
-            let _selectedImage = rotateCameraImageToProperOrientation(imageSource : selectedImage, maxResolution : 1024.0)
+            let _selectedImage = rotateCameraImageToProperOrientation(imageSource : selectedImage, maxResolution : 720.0)
             
             photoImageView.image = _selectedImage
             photoImageView.contentMode = .scaleAspectFill
@@ -213,7 +213,7 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         let imageData = restaurant.image as! Data
         
         let originalImage = UIImage(data: imageData)!
-        let scalingFactor = (originalImage.size.width > 1024) ? 1024/originalImage.size.width: 1.0
+        let scalingFactor = (originalImage.size.width > 640) ? 640/originalImage.size.width: 1.0
         let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
         
 

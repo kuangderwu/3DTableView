@@ -229,7 +229,7 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
             }
         })
         
-        
+   /*
         var _title = "Visited!"
         var _checkflag: Bool = false
         
@@ -261,15 +261,15 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
             tableView.reloadData()
             
         })
-        
+     */
         
         shareAction.backgroundColor = UIColor(red: 50.0/255.0, green: 170.0/255.0, blue: 100.0/255.0, alpha: 1.0)
         deleteAction.backgroundColor = UIColor(red: 202.0/255.0, green: 203.0/255.0, blue: 202.0/255.0, alpha: 0.8)
-        checkAction.backgroundColor = UIColor(red: 100.0/255.0, green: 60.0/255.0, blue: 200.0/255.0, alpha: 1.0)
+   //     checkAction.backgroundColor = UIColor(red: 100.0/255.0, green: 60.0/255.0, blue: 200.0/255.0, alpha: 1.0)
         
     //    shareAction.backgroundColor = UIColor.blue
     //    checkAction.backgroundColor = UIColor.orange
-        return [deleteAction, shareAction, checkAction]
+        return [deleteAction, shareAction]
         
         
     }
