@@ -23,6 +23,97 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
     
     var typeIndex = 0
     
+    func rotateCameraImageToProperOrientation(imageSource : UIImage, maxResolution : CGFloat) -> UIImage {
+        let imgRef = imageSource.cgImage
+        
+        let width = CGFloat(imgRef!.width)
+        let height = CGFloat(imgRef!.height)
+        
+        var bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        var scaleRatio : CGFloat = 1
+        if width > maxResolution || height > maxResolution {
+            
+            scaleRatio = min(maxResolution / bounds.size.width, maxResolution / bounds.size.height)
+            bounds.size.height = bounds.size.height * scaleRatio
+            bounds.size.width = bounds.size.width * scaleRatio
+        }
+        
+        var transform = CGAffineTransform.identity
+        let orient = imageSource.imageOrientation
+        let imageSize = CGSize(width: imgRef!.width, height: imgRef!.height)
+        
+        switch imageSource.imageOrientation {
+        case .up :
+            transform = CGAffineTransform.identity
+            
+        case .upMirrored :
+            transform = CGAffineTransform(translationX: imageSize.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+            
+        case .down :
+            transform = CGAffineTransform(translationX: imageSize.width, y: imageSize.height)
+            transform = transform.rotated(by: CGFloat.pi)
+            
+        case .downMirrored :
+            transform = CGAffineTransform(translationX: 0, y: imageSize.height)
+            transform = transform.scaledBy(x: 1, y: -1)
+            
+        case .left :
+            let storedHeight = bounds.size.height
+            bounds.size.height = bounds.size.width
+            bounds.size.width = storedHeight
+            transform = CGAffineTransform(translationX: 0, y: imageSize.width)
+            transform = transform.rotated(by: 3.0 * CGFloat.pi / 2.0)
+            
+        case .leftMirrored :
+            let storedHeight = bounds.size.height
+            bounds.size.height = bounds.size.width
+            bounds.size.width = storedHeight
+            transform = CGAffineTransform(translationX: imageSize.height, y: imageSize.width)
+            transform = transform.scaledBy(x: -1, y: 1)
+            transform = transform.rotated(by: 3.0 * CGFloat.pi / 2.0)
+            
+        case .right :
+            let storedHeight = bounds.size.height
+            bounds.size.height = bounds.size.width
+            bounds.size.width = storedHeight
+            transform = CGAffineTransform(translationX: imageSize.height, y: 0)
+            transform = transform.rotated(by: CGFloat.pi / 2.0)
+            
+        case .rightMirrored :
+            let storedHeight = bounds.size.height
+            bounds.size.height = bounds.size.width
+            bounds.size.width = storedHeight
+            transform = CGAffineTransform(scaleX: -1, y: 1)
+            transform = transform.rotated(by: CGFloat.pi / 2.0)
+            
+        }
+        
+        UIGraphicsBeginImageContext(bounds.size)
+        let context = UIGraphicsGetCurrentContext()
+        
+        if orient == .right || orient == .left {
+            
+            context!.scaleBy(x: -scaleRatio, y: scaleRatio)
+            context!.translateBy(x: -height, y: 0)
+        } else {
+            context!.scaleBy(x: scaleRatio, y: -scaleRatio)
+            context!.translateBy(x: 0, y: -height)
+        }
+        
+        context!.concatenate(transform)
+        context!.draw(imgRef!, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return imageCopy!
+    }
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameTextField.delegate = self
@@ -62,7 +153,10 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            photoImageView.image = selectedImage
+            
+            let _selectedImage = rotateCameraImageToProperOrientation(imageSource : selectedImage, maxResolution : 1024.0)
+            
+            photoImageView.image = _selectedImage
             photoImageView.contentMode = .scaleAspectFill
             photoImageView.clipsToBounds = true
         }
@@ -122,9 +216,12 @@ class AddRestaurantTableViewController: UITableViewController, UIImagePickerCont
         let scalingFactor = (originalImage.size.width > 1024) ? 1024/originalImage.size.width: 1.0
         let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
         
+
+        
         let imageFilePath = NSTemporaryDirectory() + restaurant.name!
         let imageFileURL = URL(fileURLWithPath: imageFilePath)
         try? UIImageJPEGRepresentation(scaledImage, 0.8)?.write(to: imageFileURL)
+        
         
         let imageAsset = CKAsset(fileURL: imageFileURL)
         record.setValue(imageAsset, forKey: "image")
