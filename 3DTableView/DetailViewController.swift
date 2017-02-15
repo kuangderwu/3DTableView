@@ -88,6 +88,7 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -184,16 +185,19 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
                     if let fetchedObjects = fetchedResultController.fetchedObjects {
                         restaurants = fetchedObjects
                         print("fetchrequest number = \(restaurants.count)")
-                        if restaurants.count == 1 {
-                            restaurants[0].isVisited = true
+                        
+                        for item in restaurants {
+                            
+                            item.isVisited = true
+                         
                             switch rating {
-                            case "😍":  restaurants[0].rating = " I love it 😍"
-                            case "😐":  restaurants[0].rating = " So so ~ 😐"
-                            case "😤":  restaurants[0].rating = " Never visit again 😤"
-                            default: break
+                                case "😍":  restaurants[0].rating = " I love it 😍"
+                                case "😐":  restaurants[0].rating = " So so ~ 😐"
+                                case "😤":  restaurants[0].rating = " Never visit again 😤"
+                                default: break
                             }
-                        print(restaurants[0].rating!)
-                        appDelegate.saveContext()
+                            appDelegate.saveContext()
+                            
                         }
                     }
                 } catch {
@@ -204,6 +208,8 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         
         tableView.reloadData()
     }
+    
+
     
     func showMap() {
         performSegue(withIdentifier: "showMap", sender: self)
