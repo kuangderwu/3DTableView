@@ -803,7 +803,14 @@
                             <outlet property="delegate" destination="ITb-yD-WeY" id="B8V-82-dPw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="🌐" id="5wS-Cd-PFc"/>
+                    <navigationItem key="navigationItem" title="🌐" id="5wS-Cd-PFc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="fch-DP-XSs">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="saveToLocal:" destination="ITb-yD-WeY" id="K9d-Sx-LTL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="spinner" destination="PEr-AJ-TTd" id="WfC-fT-rYb"/>
                     </connections>

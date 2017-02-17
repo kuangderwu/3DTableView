@@ -10,6 +10,7 @@ import UIKit
 import CloudKit
 import SafariServices
 import SystemConfiguration
+import CoreData
 
 protocol Utilities {
 }
@@ -63,11 +64,13 @@ extension NSObject:Utilities {
     }
 }
 
-class DiscoverTableViewController: UITableViewController {
+class DiscoverTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     var indexString: String = ""
     var restaurants:[CKRecord] = []
     var imageCache = NSCache<CKRecordID, NSURL>()
+    var restaurantsCD: [RestaurantMO] = []
+    var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
     
     @IBOutlet var spinner: UIActivityIndicatorView!
     
@@ -190,7 +193,7 @@ class DiscoverTableViewController: UITableViewController {
         cell.phoneField.text = phoneString
         cell.webField.text = webString
         cell.thumbImageView.image = UIImage(named: "photoalbum")
-    
+        
         
         if let imageFileURL = imageCache.object(forKey: restaurant.recordID) {
             // Mark: get image from cache
@@ -250,8 +253,100 @@ class DiscoverTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
+    
+    
+    @IBAction func saveToLocal(_ sender: UIBarButtonItem) {
+        
+        var _restaurant:RestaurantMO
+        let nilString = ""
+        var nameString:String
+        var phoneString: String
+        var locationString:String
+        var webString:String
+        var typeString:String
+        var imageTemp: UIImage?
+        for item in restaurants {
+            nameString =  item.object(forKey: "name") as! String!
+
+            
+            if (isDataExit(name: nameString) == false) {
+                phoneString = item.object(forKey: "phone") as! String! ?? nilString
+                locationString = item.object(forKey: "location") as! String! ?? nilString
+                webString = item.object(forKey: "location") as! String! ?? nilString
+                typeString = item.object(forKey: "type") as! String! ?? nilString
+                
+
+                
+                print("\(nameString),  \(typeString), \(phoneString)")
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    _restaurant = RestaurantMO(context: appDelegate.persistentContainer.viewContext)
+                    _restaurant.name = nameString
+                    _restaurant.location = locationString
+                    _restaurant.phone = phoneString
+                    _restaurant.website = webString
+                    switch typeString {
+                    case "Coffee": _restaurant.type = Int16(1)
+                    case "Desert": _restaurant.type = Int16(2)
+                    case "Brunch": _restaurant.type = Int16(0)
+                    default: _restaurant.type = Int16(3)
+                    }
+                    
+                    if let image = item.object(forKey: "image") {
+                        let imageAsset = image as! CKAsset
+                        
+                        if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
+            //                _restaurant.image = UIImage(data: imageData)
+                            _restaurant.image = NSData(data: imageData)
+                        }
+                    }
+                    
+
+                    appDelegate.saveContext()
+                }
+            }
+            
+        }
+        
+    }
+    
+    func isDataExit(name:String) -> Bool {
+        
+        var _result: Bool = false
+        var _restaurants = [RestaurantMO]()
+
+        let fetchRequest: NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
+        let predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key:"name", ascending:true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+            let context = appDelegate.persistentContainer.viewContext
+            fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedResultController.delegate = self
+            
+            do {
+                try fetchedResultController.performFetch()
+                if let fetchedObjects = fetchedResultController.fetchedObjects {
+                    _restaurants = fetchedObjects
+                    if _restaurants.count == 0 {
+                        _result = false
+                    } else {
+                        _result = true
+                    }
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        return _result
+    }
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
+    
+    
     
 }
