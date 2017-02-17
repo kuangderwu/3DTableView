@@ -73,6 +73,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
     var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
     
     @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var saveBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
         spinner.hidesWhenStopped = true
         view.addSubview(spinner)
         spinner.startAnimating()
-        
+        saveBtn.isEnabled = false
         
         
         // MARK: Refresh Control init
@@ -146,6 +147,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
                     // MARK: CloudKit 操作型
                     self.spinner.stopAnimating()
                     self.tableView.reloadData()
+                    self.saveBtn.isEnabled = true
                     // MARK: Refresh Control endRefreshing()
                     if let refreshControl = self.refreshControl {
                         if refreshControl.isRefreshing {
@@ -264,7 +266,6 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
         var locationString:String
         var webString:String
         var typeString:String
-        var imageTemp: UIImage?
         for item in restaurants {
             nameString =  item.object(forKey: "name") as! String!
 
@@ -295,7 +296,6 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
                         let imageAsset = image as! CKAsset
                         
                         if let imageData = try? Data.init(contentsOf: imageAsset.fileURL) {
-            //                _restaurant.image = UIImage(data: imageData)
                             _restaurant.image = NSData(data: imageData)
                         }
                     }
@@ -306,6 +306,20 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
             }
             
         }
+        
+            
+
+            let alertcontroller = UIAlertController(title: "💾...", message: "iCloud Record saved to yours iPhone", preferredStyle: .alert);
+
+            let alertaction = UIAlertAction(title: "✌️", style: .default , handler:nil);
+        
+            alertcontroller.addAction(alertaction);
+            self.present(alertcontroller, animated: true, completion: nil);
+            
+        
+        
+        
+        
         
     }
     
