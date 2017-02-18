@@ -71,6 +71,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
     var imageCache = NSCache<CKRecordID, NSURL>()
     var restaurantsCD: [RestaurantMO] = []
     var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
+    var isFirsrLoaded = true
     
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet weak var saveBtn: UIBarButtonItem!
@@ -84,6 +85,11 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
         view.addSubview(spinner)
         spinner.startAnimating()
         saveBtn.isEnabled = false
+        
+        
+        // Cell size autolayout
+        tableView.estimatedRowHeight = 150.0
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         
         // MARK: Refresh Control init
@@ -104,6 +110,15 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
             // action style .default .cancel .destructive
             alertcontroller.addAction(alertaction);
             self.present(alertcontroller, animated: true, completion: nil);
+        }
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isFirsrLoaded {
+            let indexSet = NSIndexSet(index: 0)
+            tableView.reloadSections(indexSet as IndexSet, with: .none)
+            isFirsrLoaded = false
         }
     }
 
@@ -178,7 +193,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
         let restaurant = restaurants[indexPath.row]
         var locString = "🏠: "
         var phoneString = "☎️: "
-        var  webString = "🍽: "
+        var  webString = "💻: "
         
         cell.nameField.text = restaurant.object(forKey: "name") as? String
         

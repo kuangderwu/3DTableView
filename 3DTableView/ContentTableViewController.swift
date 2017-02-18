@@ -22,6 +22,8 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
     var isSearching: Bool = false
     
     let searchBar : UISearchBar? = nil
+    var isFirstLoaded = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +49,11 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
             }
         }
         
+        // Cell Auto Layout 
+        
+        tableView.estimatedRowHeight = 80.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         
         // MARK: 20.4 Update Search Controller
         setupSearchBar()
@@ -59,6 +66,15 @@ class ContentTableViewController: UITableViewController, NSFetchedResultsControl
             registerForPreviewing(with: self as UIViewControllerPreviewingDelegate, sourceView: view)
         }
         
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isFirstLoaded {
+            let indexSet = NSIndexSet(index: 0)
+            tableView.reloadSections(indexSet as IndexSet, with: .none)
+            isFirstLoaded = false
+        }
     }
     
     func setupSearchBar() {

@@ -17,7 +17,8 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
     
     var _results = [RestaurantMO]()
     var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
-    var isSearched: Bool = false
+    var isFirstLoaded = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +32,6 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
 
         }
 
-        print("cirtia: \(_critia)")
         restaurants = DataManager.fetchObj()
         
         for item in restaurants {
@@ -39,10 +39,22 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
                 _results.append(item)
             }
         }
-        print(_results.count)
+
+        // Auto Cell height
+        
+        tableView.estimatedRowHeight = 120.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
   
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        if isFirstLoaded {
+            let indexSet = NSIndexSet(index: 0)
+            tableView.reloadSections(indexSet as IndexSet, with: .none)
+            isFirstLoaded = false
+        }
+    }
 
 
     // MARK: - Table view data source

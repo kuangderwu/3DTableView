@@ -116,13 +116,13 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
             default: cell.valueLabel.text = "Others"
             }
         case 2:
-            cell.fieldLabel.text = "Location"
+            cell.fieldLabel.text = "🏠"
             cell.valueLabel.text = restaurant.location
         case 3:
-            cell.fieldLabel.text = "Phone"
+            cell.fieldLabel.text = "☎️"
             cell.valueLabel.text = restaurant.phone
         case 4:
-            cell.fieldLabel.text = "Website"
+            cell.fieldLabel.text = "💻"
             cell.valueLabel.text = restaurant.website
         case 5:
             cell.fieldLabel.text = "Been Here?"

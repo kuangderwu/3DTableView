@@ -11,11 +11,12 @@ import UIKit
 class CoverTableViewController: UITableViewController {
     
     var myDictionary = [
-        ["name":"Explore", "image":"1","item":"Keep in memory"],
+        ["name":"Explore", "image":"1","item":"Keep in Memory"],
         ["name":"Discover", "image":"2", "item":"Shared by Cloud"],
-        ["name":"Coffee", "image":"3", "item":"Place to read & think"],
-        ["name":"Desert", "image":"4", "item":"Joy time"],
-        ["name":"Brunch", "image":"5", "item":"Health & Energy"]
+        ["name":"Coffee", "image":"3", "item":"Place to Read & Think"],
+        ["name":"Desert", "image":"4", "item":"Joy Time"],
+        ["name":"Brunch", "image":"5", "item":"Health & Energy"],
+        ["name":"Others", "image":"6", "item":"Appreciate the Variety"]
     ]
 
 
@@ -95,6 +96,7 @@ class CoverTableViewController: UITableViewController {
             default:
                 let contentview = segue.destination as! InfoTableViewController
                 contentview.indexString = sendString
+                contentview.title = sendString
 
         }
 
