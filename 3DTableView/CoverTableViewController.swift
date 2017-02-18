@@ -95,6 +95,7 @@ class CoverTableViewController: UITableViewController {
             default:
                 let contentview = segue.destination as! InfoTableViewController
                 contentview.indexString = sendString
+
         }
 
 

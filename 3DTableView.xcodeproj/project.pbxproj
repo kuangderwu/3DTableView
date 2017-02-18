@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D1AB63C1E574859008ADC61 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1AB63B1E574859008ADC61 /* DataManager.swift */; };
 		3D1D158E1E34E6CF00C0AC32 /* ContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D158D1E34E6CF00C0AC32 /* ContentTableViewController.swift */; };
 		3D1D15901E34FFFB00C0AC32 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D158F1E34FFFB00C0AC32 /* InfoTableViewController.swift */; };
 		3D1D15941E350F4F00C0AC32 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D15931E350F4F00C0AC32 /* Restaurant.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D1AB63B1E574859008ADC61 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		3D1D158D1E34E6CF00C0AC32 /* ContentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTableViewController.swift; sourceTree = "<group>"; };
 		3D1D158F1E34FFFB00C0AC32 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		3D1D15931E350F4F00C0AC32 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				3D1D158F1E34FFFB00C0AC32 /* InfoTableViewController.swift */,
 				3DC287681E417768004DE17C /* InfoTableViewCell.swift */,
+				3D1AB63B1E574859008ADC61 /* DataManager.swift */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				3D3BAD7B1E3457E700B7FE92 /* CoverTableViewController.swift in Sources */,
 				3D1D15961E3517FB00C0AC32 /* ContentTableViewCell.swift in Sources */,
 				3D8A8C7B1E43146700750247 /* DiscoverTableViewCell.swift in Sources */,
+				3D1AB63C1E574859008ADC61 /* DataManager.swift in Sources */,
 				3D1D158E1E34E6CF00C0AC32 /* ContentTableViewController.swift in Sources */,
 				3DD759581E34751600E91365 /* CoverTableViewCell.swift in Sources */,
 				3DAE39ED1E4042EF00FBBB43 /* RestaurantData.xcdatamodeld in Sources */,

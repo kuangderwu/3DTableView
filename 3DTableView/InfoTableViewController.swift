@@ -13,15 +13,14 @@ import SafariServices
 class InfoTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     var indexString: String = ""
-    var restaurants: [RestaurantMO] = []
+    var restaurants: [RestaurantMO]!
     
+    var _results = [RestaurantMO]()
     var fetchedResultController: NSFetchedResultsController<RestaurantMO>!
-    
+    var isSearched: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let fetchRequest: NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
-        
         var _critia : Int16
         
         switch indexString {
@@ -31,31 +30,17 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
         default: _critia = Int16(3)
 
         }
+
+        print("cirtia: \(_critia)")
+        restaurants = DataManager.fetchObj()
         
-        let predicate = NSPredicate(format: "type == %@", String(_critia))
-        
-        
-        fetchRequest.predicate = predicate
-        
-        let sortDescriptor = NSSortDescriptor(key:"name", ascending:true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            let context = appDelegate.persistentContainer.viewContext
-            fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-            fetchedResultController.delegate = self
-            
-            do {
-                try fetchedResultController.performFetch()
-                if let fetchedObjects = fetchedResultController.fetchedObjects {
-                    restaurants = fetchedObjects
-                }
-            } catch {
-                print(error.localizedDescription)
+        for item in restaurants {
+            if item.type ==  _critia {
+                _results.append(item)
             }
         }
-        
-
+        print(_results.count)
+  
     }
 
 
@@ -69,7 +54,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return restaurants.count
+        return _results.count
     }
 
     
@@ -78,7 +63,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
 
         // Configure the cell...
         
-        let _restaurant = restaurants[indexPath.row]
+        let _restaurant = _results[indexPath.row]
         
         if _restaurant.rating == nil {
             _restaurant.rating = "   "
@@ -89,6 +74,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
         cell.locationField.text = _restaurant.location
         cell.phoneField.text = _restaurant.phone
         cell.webField.text = _restaurant.website
+        
         
         cell.thumbImageView.image = UIImage(data: _restaurant.image as! Data)
         cell.thumbImageView.layer.cornerRadius = 40.0
@@ -101,7 +87,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
         
         var urlString: String
         
-        let _restautant = restaurants[indexPath.row]
+        let _restautant = _results[indexPath.row]
         
         if _restautant.website != "" {
             if !(_restautant.website?.hasPrefix("http"))! {
@@ -125,7 +111,7 @@ class InfoTableViewController: UITableViewController, NSFetchedResultsController
 
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return false
+        return false
     }
     
     

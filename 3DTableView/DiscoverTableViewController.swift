@@ -188,7 +188,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
         if let tempphone = restaurant.object(forKey: "phone") as? String {
             phoneString += tempphone
         }
-        if let tempweb = restaurant.object(forKey: "type") as? String {
+        if let tempweb = restaurant.object(forKey: "web") as? String {
             webString += tempweb
         }
         cell.locationField.text = locString
@@ -273,7 +273,7 @@ class DiscoverTableViewController: UITableViewController, NSFetchedResultsContro
             if (isDataExit(name: nameString) == false) {
                 phoneString = item.object(forKey: "phone") as! String! ?? nilString
                 locationString = item.object(forKey: "location") as! String! ?? nilString
-                webString = item.object(forKey: "location") as! String! ?? nilString
+                webString = item.object(forKey: "web") as! String! ?? nilString
                 typeString = item.object(forKey: "type") as! String! ?? nilString
                 
 

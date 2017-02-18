@@ -14,7 +14,9 @@ class InfoTableViewCell: UITableViewCell {
     @IBOutlet var nameField: UILabel!
     @IBOutlet var locationField: UILabel!
     @IBOutlet var phoneField: UILabel!
-    @IBOutlet var webField: UILabel!
+    
+    @IBOutlet weak var webField: UILabel!
+    
     @IBOutlet var thumbImageView: UIImageView!
     
     override func awakeFromNib() {
